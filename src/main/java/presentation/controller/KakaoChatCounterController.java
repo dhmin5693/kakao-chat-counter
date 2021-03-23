@@ -6,6 +6,9 @@ import presentation.dto.KakaoChatCountResponseV1;
 public class KakaoChatCounterController {
 
     public KakaoChatCountResponseV1 countChat(KakaoChatCountRequestV1 request) {
+
+        // do something...
+
         return null;
     }
 }
