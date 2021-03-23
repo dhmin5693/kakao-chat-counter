@@ -6,12 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class KakaoChatCounter {
 
@@ -35,6 +32,7 @@ public class KakaoChatCounter {
 
         try {
             URL res = getClass().getClassLoader().getResource(fileName);
+            assert res != null;
             return Paths.get(res.toURI()).toFile();
         } catch (Exception e) {
             throw new IllegalArgumentException(ERR_FILE_NOT_FOUND);
@@ -87,18 +85,18 @@ public class KakaoChatCounter {
         return !fileName.contains(EXTENSION);
     }
 
-    public void printRanking() {
-
-        List<String> ranking = resultMap.entrySet()
-                                        .stream()
-                                        .map(entry -> new User(entry.getKey(), entry.getValue()))
-                                        .sorted(Comparator.comparingInt(User::getCount)
-                                                          .reversed())
-                                        .map(User::toString)
-                                        .collect(Collectors.toList());
-
-        for (int i = 0; i < ranking.size(); i++) {
-            System.out.println(String.format("%-3s", i + 1) + "위 - " + ranking.get(i));
-        }
-    }
+//    public void printRanking() {
+//
+//        List<String> ranking = resultMap.entrySet()
+//                                        .stream()
+//                                        .map(entry -> new User(entry.getKey(), entry.getValue()))
+//                                        .sorted(Comparator.comparingInt(User::getCount)
+//                                                          .reversed())
+//                                        .map(User::toString)
+//                                        .collect(Collectors.toList());
+//
+//        for (int i = 0; i < ranking.size(); i++) {
+//            System.out.println(String.format("%-3s", i + 1) + "위 - " + ranking.get(i));
+//        }
+//    }
 }
