@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import presentation.controller.KakaoChatCounterController;
-import presentation.dto.KakaoChatCountRequestV1;
+import presentation.dto.KakaoChatCountRequest;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,10 +15,10 @@ public class Main {
         var startDate = scanner.nextLine();
 
         var controller = new KakaoChatCounterController();
-        controller.countChat(KakaoChatCountRequestV1.builder()
-                                                    .filePath(filePath)
-                                                    .startDate(startDate)
-                                                    .build());
+        controller.countChat(KakaoChatCountRequest.builder()
+                                                  .filePath(filePath)
+                                                  .startDate(startDate)
+                                                  .build());
 
 //        KakaoChatCounter kakaoChatCounter = new KakaoChatCounter(filePath);
 //        kakaoChatCounter.analyze();

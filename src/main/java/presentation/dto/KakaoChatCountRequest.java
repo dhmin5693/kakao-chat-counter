@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Builder
 @RequiredArgsConstructor
-public class KakaoChatCountRequestV1 {
+public class KakaoChatCountRequest {
     private final String filePath;
     private final String startDate;
 }

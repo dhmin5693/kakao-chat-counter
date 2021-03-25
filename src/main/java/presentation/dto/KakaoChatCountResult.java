@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class KakaoChatCountResponseV1 {
+public class KakaoChatCountResult {
     private final Ranking ranking;
 }

@@ -1,11 +1,11 @@
 package presentation.controller;
 
-import presentation.dto.KakaoChatCountRequestV1;
-import presentation.dto.KakaoChatCountResponseV1;
+import presentation.dto.KakaoChatCountRequest;
+import presentation.dto.KakaoChatCountResult;
 
 public class KakaoChatCounterController {
 
-    public KakaoChatCountResponseV1 countChat(KakaoChatCountRequestV1 request) {
+    public KakaoChatCountResult countChat(KakaoChatCountRequest request) {
 
         // do something...
 
