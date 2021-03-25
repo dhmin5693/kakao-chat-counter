@@ -1,14 +1,20 @@
 package domain;
 
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+import java.util.Map.Entry;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
-@RequiredArgsConstructor
 public class Ranking {
 
     private final List<User> users;
+
+    public Ranking(List<User> users) {
+        this.users = users.stream()
+                          .sorted()
+                          .collect(toUnmodifiableList());
+    }
 
     @Override
     public String toString() {

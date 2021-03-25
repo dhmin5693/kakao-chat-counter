@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -28,21 +27,12 @@ public class KakaoChatCounter {
 
         try (BufferedReader br = readFile()) {
 
+            skipToStartDate(br);
+
             String line;
             String nickname = "";
 
-            boolean skip = true;
             while ((line = br.readLine()) != null) {
-
-                if (skip && line.equals("--------------- 2021년 1월 1일 금요일 ---------------")) {
-                    skip = false;
-                    continue;
-                }
-
-                if (skip || line.startsWith("---------------")) {
-                    continue;
-                }
-
                 int index = line.indexOf("] [");
                 if (index > 0) {
                     nickname = line.substring(1, index);
@@ -56,7 +46,6 @@ public class KakaoChatCounter {
 
             return new Ranking(cache.entrySet()
                                     .stream()
-                                    .sorted(this::compare)
                                     .map(entry -> new User(entry.getKey(), entry.getValue()))
                                     .collect(toList())
             );
@@ -66,16 +55,24 @@ public class KakaoChatCounter {
         }
     }
 
-    private int compare(Entry<String, Integer> e1, Entry<String, Integer> e2) {
+    private boolean isNotNeedSkip() {
+        // Todo implement this method
+        return false;
+    }
 
-        int v1 = e1.getValue();
-        int v2 = e2.getValue();
+    private void skipToStartDate(BufferedReader br) throws IOException {
 
-        if (v1 != v2) {
-            return v2 - v1;
+        if (isNotNeedSkip()) {
+            return;
         }
 
-        return e1.getKey().compareTo(e2.getKey());
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            if (line.equals("--------------- 2021년 1월 1일 금요일 ---------------")) {
+                return;
+            }
+        }
     }
 
     private BufferedReader readFile() throws FileNotFoundException {
