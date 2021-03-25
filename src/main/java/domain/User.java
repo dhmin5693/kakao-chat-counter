@@ -1,6 +1,5 @@
 package domain;
 
-import exception.NoNicknameUserException;
 import lombok.Builder;
 
 public class User implements Comparable<User> {
@@ -14,7 +13,7 @@ public class User implements Comparable<User> {
         this.count = count;
 
         if (isBlankNickname()) {
-            throw new NoNicknameUserException();
+            throw new IllegalArgumentException("사용자 Nickname 입력 오류");
         }
     }
 

@@ -1,6 +1,5 @@
 package domain;
 
-import exception.NoNicknameUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +29,8 @@ class UserTest {
     @DisplayName("nickname이 없으면 exception")
     @Test
     void fail01() {
-        assertThrows(NoNicknameUserException.class, () -> User.builder()
-                                                              .count(CHAT_COUNT)
-                                                              .build());
+        assertThrows(IllegalArgumentException.class, () -> User.builder()
+                                                               .count(CHAT_COUNT)
+                                                               .build());
     }
 }
