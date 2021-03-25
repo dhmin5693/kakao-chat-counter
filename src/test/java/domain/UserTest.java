@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class UserTest {
 
     private static final String CHAT_USER_NICKNAME = "USER";
-    private static final int CHAT_COUNT = 3;
     private static final String TEMPLATE = "#nickname# : #count#회";
+    private static final int CHAT_COUNT = 3;
 
     @DisplayName("user 데이터 정상")
     @Test

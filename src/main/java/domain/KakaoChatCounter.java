@@ -1,69 +1,45 @@
 package domain;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.Map.Entry;
+
+import static java.util.stream.Collectors.toList;
 
 public class KakaoChatCounter {
 
-    private static final String EXTENSION = ".txt";
-    private static final String ERR_FILE_NOT_FOUND = "파일을 찾을 수 없습니다.";
-    private static final Pattern pattern = Pattern.compile("^\\[.+]\\s\\[.+]\\s.*$");
+    private final String filePath;
+    private final String startDate;
 
-    private final File file;
-    private Map<String, Integer> resultMap = new HashMap<>();
-
-    public KakaoChatCounter(String fileName) {
-
-        if (hasNotExtension(fileName)) {
-            fileName = fileName + EXTENSION;
-        }
-
-        this.file = toFile(fileName);
+    public KakaoChatCounter(String filePath, String startDate) {
+        this.filePath = filePath;
+        this.startDate = startDate;
     }
 
-    private File toFile(String fileName) {
+    // Todo Mac type extractor
+    public Ranking extractRanking() {
 
-        try {
-            URL res = getClass().getClassLoader().getResource(fileName);
-            assert res != null;
-            return Paths.get(res.toURI()).toFile();
-        } catch (Exception e) {
-            throw new IllegalArgumentException(ERR_FILE_NOT_FOUND);
-        }
-    }
+        var cache = new HashMap<String, Integer>();
 
-    public void analyze() {
-        try {
-            FileReader textRead = new FileReader(file);
-            BufferedReader bfReader = new BufferedReader(textRead);
+        try (BufferedReader br = readFile()) {
+
             String line;
             String nickname = "";
 
             boolean skip = true;
-            while ((line = bfReader.readLine()) != null) {
-//                Matcher matcher = pattern.matcher(line);
-//
-//                if (!matcher.find()) {
-//                    continue;
-//                }
+            while ((line = br.readLine()) != null) {
 
                 if (skip && line.equals("--------------- 2021년 1월 1일 금요일 ---------------")) {
                     skip = false;
                     continue;
                 }
 
-                if (skip) {
-                    continue;
-                }
-
-                if (line.startsWith("---------------")) {
+                if (skip || line.startsWith("---------------")) {
                     continue;
                 }
 
@@ -73,30 +49,36 @@ public class KakaoChatCounter {
                 }
 
                 if (!"".equals(nickname)) {
-                    resultMap.put(nickname, resultMap.getOrDefault(nickname, 0) + 1);
+                    cache.put(nickname, cache.getOrDefault(nickname, 0) + 1);
+                    cache.merge(nickname, 1, (value, count) -> count + 1);
                 }
             }
+
+            return new Ranking(cache.entrySet()
+                                    .stream()
+                                    .sorted(this::compare)
+                                    .map(entry -> new User(entry.getKey(), entry.getValue()))
+                                    .collect(toList())
+            );
+
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
-    private boolean hasNotExtension(String fileName) {
-        return !fileName.contains(EXTENSION);
+    private int compare(Entry<String, Integer> e1, Entry<String, Integer> e2) {
+
+        int v1 = e1.getValue();
+        int v2 = e2.getValue();
+
+        if (v1 != v2) {
+            return v2 - v1;
+        }
+
+        return e1.getKey().compareTo(e2.getKey());
     }
 
-//    public void printRanking() {
-//
-//        List<String> ranking = resultMap.entrySet()
-//                                        .stream()
-//                                        .map(entry -> new User(entry.getKey(), entry.getValue()))
-//                                        .sorted(Comparator.comparingInt(User::getCount)
-//                                                          .reversed())
-//                                        .map(User::toString)
-//                                        .collect(Collectors.toList());
-//
-//        for (int i = 0; i < ranking.size(); i++) {
-//            System.out.println(String.format("%-3s", i + 1) + "위 - " + ranking.get(i));
-//        }
-//    }
+    private BufferedReader readFile() throws FileNotFoundException {
+        return new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+    }
 }
