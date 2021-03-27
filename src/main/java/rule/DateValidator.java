@@ -12,6 +12,10 @@ public class DateValidator {
 
     public void validate(String date) {
 
+        if (date == null) {
+            throwException("null");
+        }
+
         if (NO_INPUT_DATE.equals(date)) {
             return;
         }
@@ -19,7 +23,11 @@ public class DateValidator {
         try {
             FORMAT.parse(date);
         } catch (ParseException e) {
-            throw new IllegalArgumentException();
+            throwException(date);
         }
+    }
+
+    private void throwException(String data) {
+        throw new IllegalArgumentException("날짜 형식이 잘못되었습니다:" + data);
     }
 }

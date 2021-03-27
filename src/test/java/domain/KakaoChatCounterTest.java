@@ -1,6 +1,8 @@
 package domain;
 
+import exception.IllegalFilePathException;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,6 +15,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class KakaoChatCounterTest {
 
+    @Disabled
     @DisplayName("랭킹 집계 성공")
     @MethodSource("tc01")
     @ParameterizedTest

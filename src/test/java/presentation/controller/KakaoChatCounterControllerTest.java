@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import domain.IllegalFilePathException;
+import exception.IllegalFilePathException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +27,7 @@ class KakaoChatCounterControllerTest {
     void success() {
         var request = KakaoChatCountRequest.builder()
                                            .filePath("src/test/resources/windows-test-chat-01.txt")
+                                           .startDate("")
                                            .build();
 
         var response = controller.countChat(request);
