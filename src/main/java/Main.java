@@ -1,8 +1,10 @@
 import java.util.Scanner;
 import presentation.controller.KakaoChatCounterController;
 import presentation.dto.KakaoChatCountRequest;
+import rule.DateValidator;
 
 public class Main {
+
     public static void main(String[] args) {
 
         var scanner = new Scanner(System.in);
@@ -14,14 +16,12 @@ public class Main {
         System.out.println("yyyy/MM/dd 형식으로 입력하되 불필요하면 입력하지 말고 엔터를 눌러주세요.");
         var startDate = scanner.nextLine();
 
-        var controller = new KakaoChatCounterController();
-        controller.countChat(KakaoChatCountRequest.builder()
-                                                  .filePath(filePath)
-                                                  .startDate(startDate)
-                                                  .build());
+        var controller = new KakaoChatCounterController(new DateValidator());
+        var result = controller.countChat(KakaoChatCountRequest.builder()
+                                                               .filePath(filePath)
+                                                               .startDate(startDate)
+                                                               .build());
 
-//        KakaoChatCounter kakaoChatCounter = new KakaoChatCounter(filePath);
-//        kakaoChatCounter.analyze();
-//        kakaoChatCounter.printRanking();
+        System.out.println(result.getRanking().toString());
     }
 }

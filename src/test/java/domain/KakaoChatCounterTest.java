@@ -13,7 +13,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class KakaoChatCounterTest {
 
-    @DisplayName("랭킹 집계 정상")
+    @DisplayName("랭킹 집계 성공")
     @MethodSource("tc01")
     @ParameterizedTest
     void success(String filePath, String startDate, Ranking output) {
@@ -40,13 +40,5 @@ class KakaoChatCounterTest {
             var counter = new KakaoChatCounter(filePath, "");
             counter.extractRanking();
         });
-    }
-
-    @DisplayName("시작일 양식 오류")
-    @ValueSource(strings = {"", "/", "/abc.exe"})
-    @ParameterizedTest
-    void fail02(String startDate) {
-        assertThrows(IllegalArgumentException.class,
-                     () -> new KakaoChatCounter("src/test/resources/windows-test-chat-01.txt", startDate));
     }
 }
