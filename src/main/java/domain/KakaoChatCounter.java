@@ -50,13 +50,13 @@ public class KakaoChatCounter {
             );
 
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new IllegalFilePathException(filePath);
         }
     }
 
     private boolean isNotNeedSkip() {
         // Todo implement this method
-        return false;
+        return true;
     }
 
     private void skipToStartDate(BufferedReader br) throws IOException {

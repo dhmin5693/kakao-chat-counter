@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class KakaoChatCounterTest {
 
@@ -19,20 +20,26 @@ class KakaoChatCounterTest {
         var kakaoChatCounter = new KakaoChatCounter(filePath, startDate);
 
         assertEquals(output.toString(),
-            kakaoChatCounter.extractRanking().toString());
+                     kakaoChatCounter.extractRanking().toString());
     }
 
     private static Stream<Arguments> tc01() {
-        // Todo fill test case data
-        return null;
+        return Stream.of(
+            // todo set data
+            arguments(),
+            arguments(),
+            arguments()
+        );
     }
 
     @DisplayName("파일 경로 및 확장자 오류")
     @ValueSource(strings = {"", "/", "/abc.exe"})
     @ParameterizedTest
     void fail01(String filePath) {
-        assertThrows(IllegalArgumentException.class,
-            () -> new KakaoChatCounter(filePath, ""));
+        assertThrows(IllegalFilePathException.class, () -> {
+            var counter = new KakaoChatCounter(filePath, "");
+            counter.extractRanking();
+        });
     }
 
     @DisplayName("시작일 양식 오류")
@@ -40,6 +47,6 @@ class KakaoChatCounterTest {
     @ParameterizedTest
     void fail02(String startDate) {
         assertThrows(IllegalArgumentException.class,
-            () -> new KakaoChatCounter("resources/windows-test-chat-01.txt", startDate));
+                     () -> new KakaoChatCounter("src/test/resources/windows-test-chat-01.txt", startDate));
     }
 }

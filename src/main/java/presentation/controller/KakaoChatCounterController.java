@@ -1,5 +1,6 @@
 package presentation.controller;
 
+import domain.KakaoChatCounter;
 import presentation.dto.KakaoChatCountRequest;
 import presentation.dto.KakaoChatCountResult;
 
@@ -7,8 +8,10 @@ public class KakaoChatCounterController {
 
     public KakaoChatCountResult countChat(KakaoChatCountRequest request) {
 
-        // do something...
+        var kakaoChatCounter =
+            new KakaoChatCounter(request.getFilePath(),
+                                 request.getStartDate());
 
-        return null;
+        return new KakaoChatCountResult(kakaoChatCounter.extractRanking());
     }
 }

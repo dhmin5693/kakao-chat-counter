@@ -1,6 +1,6 @@
 package presentation.controller;
 
-import java.nio.file.NoSuchFileException;
+import domain.IllegalFilePathException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,13 +25,13 @@ class KakaoChatCounterControllerTest {
     @Test
     void success() {
         var request = KakaoChatCountRequest.builder()
-                                           .filePath("resources/windows-test-chat-01.txt")
+                                           .filePath("src/test/resources/windows-test-chat-01.txt")
                                            .build();
 
         var response = controller.countChat(request);
         var ranking = response.getRanking();
 
-        var result = List.of("user1 : 3회", "user2 : 1회", "user3 : 1회");
+        var result = List.of("kim : 2회", "seok : 2회", "user1 : 2회", "zoo : 2회");
         assertEquals(ranking.toString(), String.join("\n", result));
     }
 
@@ -42,7 +42,7 @@ class KakaoChatCounterControllerTest {
                                            .filePath("invalid-filepath")
                                            .build();
 
-        assertThrows(NoSuchFileException.class, () -> controller.countChat(request));
+        assertThrows(IllegalFilePathException.class, () -> controller.countChat(request));
     }
 
     @DisplayName("시작일이 올바르게 입력되지 않은 경우 exception 발생")
