@@ -58,6 +58,7 @@ class KakaoChatCounterControllerTest {
     void fail02(String date) {
 
         var request = KakaoChatCountRequest.builder()
+                                           .filePath("DONT-CATE")
                                            .startDate(date)
                                            .build();
 

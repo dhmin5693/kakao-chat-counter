@@ -13,7 +13,7 @@ public class Main {
         var filePath = scanner.nextLine();
 
         System.out.println("채팅 수를 세기 시작할 날짜를 정해주세요.");
-        System.out.println("yyyy/MM/dd 형식으로 입력하되 불필요하면 입력하지 말고 엔터를 눌러주세요.");
+        System.out.println("yyyy/MM/dd 형식으로 입력하되 불필요하면 -만 입력해주세요.");
         var startDate = scanner.nextLine();
 
         var controller = new KakaoChatCounterController(new DateValidator());

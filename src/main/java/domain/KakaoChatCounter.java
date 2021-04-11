@@ -12,6 +12,8 @@ import static java.util.stream.Collectors.toList;
 
 public class KakaoChatCounter {
 
+    private static final String NO_INPUT_DATE = "";
+
     private final String filePath;
     private final String startDate;
 
@@ -56,8 +58,7 @@ public class KakaoChatCounter {
     }
 
     private boolean isNotNeedSkip() {
-        // Todo implement this method
-        return true;
+        return NO_INPUT_DATE.equals(startDate);
     }
 
     private void skipToStartDate(BufferedReader br) throws IOException {
@@ -66,13 +67,13 @@ public class KakaoChatCounter {
             return;
         }
 
-        String line;
-
-        while ((line = br.readLine()) != null) {
-            if (line.equals("--------------- 2021년 1월 1일 금요일 ---------------")) {
-                return;
-            }
-        }
+        // todo implement this
+//        String line;
+//        while ((line = br.readLine()) != null) {
+//            if (line.equals("--------------- 2021년 1월 1일 금요일 ---------------")) {
+//                return;
+//            }
+//        }
     }
 
     private BufferedReader readFile() throws FileNotFoundException {

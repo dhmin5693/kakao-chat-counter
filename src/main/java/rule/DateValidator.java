@@ -8,7 +8,7 @@ public class DateValidator {
     private static final SimpleDateFormat FORMAT =
         new SimpleDateFormat("yyyy/MM/dd");
 
-    private static final String NO_INPUT_DATE = "";
+    private static final String NO_INPUT_DATE = "-";
 
     public void validate(String date) {
 
