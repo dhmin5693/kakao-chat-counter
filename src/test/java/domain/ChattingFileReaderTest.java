@@ -2,13 +2,17 @@ package domain;
 
 import exception.IllegalFilePathException;
 import exception.IllegalFileTypeException;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ChattingFileReaderTest {
 
@@ -20,6 +24,23 @@ class ChattingFileReaderTest {
     @ParameterizedTest
     void success(String path) {
         assertDoesNotThrow(() -> new ChattingFileReader(path));
+    }
+
+    @DisplayName("정확한 file type 반환")
+    @MethodSource(value = "fileTypeTestCase")
+    @ParameterizedTest
+    void fileTypeTest(String path, FileType expected) {
+        var reader = new ChattingFileReader(path);
+
+        var actual = reader.getFileType();
+        assertEquals(actual, expected);
+    }
+
+    private static Stream<Arguments> fileTypeTestCase() {
+        return Stream.of(
+            arguments("src/test/resources/windows-sample-01.txt", FileType.TXT),
+            arguments("src/test/resources/mac-sample-01.csv", FileType.CSV)
+        );
     }
 
     @DisplayName("path 오류")

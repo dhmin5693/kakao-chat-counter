@@ -10,11 +10,16 @@ import java.util.stream.Stream;
 public class ChattingFileReader {
 
     private final String filePath;
+    private final FileType fileType;
 
     public ChattingFileReader(String filePath) {
         this.filePath = filePath;
 
-        if (!(filePath.endsWith(".txt") && filePath.endsWith(".csv"))) {
+        int extensionIndex = filePath.lastIndexOf('.');
+        String extension = filePath.substring(extensionIndex + 1);
+
+        this.fileType = FileType.of(extension);
+        if (fileType.isInvalidType()) {
             throw new IllegalFileTypeException(filePath);
         }
     }
@@ -25,5 +30,9 @@ public class ChattingFileReader {
         } catch (IOException e) {
             throw new IllegalFilePathException(filePath);
         }
+    }
+
+    public FileType getFileType() {
+        return fileType;
     }
 }
