@@ -21,4 +21,15 @@ public class Ranking {
                     .map(User::toString)
                     .collect(joining("\n"));
     }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (!(o instanceof Ranking)) {
+            return false;
+        }
+
+        Ranking ranking = (Ranking) o;
+        return this.toString().equals(ranking.toString());
+    }
 }
