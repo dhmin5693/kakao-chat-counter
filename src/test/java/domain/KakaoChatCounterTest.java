@@ -3,7 +3,6 @@ package domain;
 import exception.IllegalFilePathException;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +15,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class KakaoChatCounterTest {
 
-    @Disabled
     @DisplayName("랭킹 집계 성공")
     @MethodSource("tc01")
     @ParameterizedTest
@@ -44,7 +42,7 @@ class KakaoChatCounterTest {
 
         return Stream.of(
             arguments("src/test/resources/windows-sample-01.txt", "-", new Ranking(windowSampleUsers)),
-            arguments("src/test/resources/mac-ample-01.txt", "-", new Ranking(macSampleUsers))
+            arguments("src/test/resources/mac-sample-01.csv", "-", new Ranking(macSampleUsers))
         );
     }
 
