@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.toMap;
 public enum FileType {
 
     TXT("txt", TxtFileAnalyser::new),
-    CSV("csv", null),
+    CSV("csv", CsvFileAnalyser::new),
     NONE("", null);
 
     private final String extension;

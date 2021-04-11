@@ -35,8 +35,8 @@ class KakaoChatCounterControllerTest {
 
         var result = List.of("kim : 2회",
                              "seok : 2회",
-                             "user1 : 2회",
-                             "zoo : 2회");
+                             "zoo : 2회",
+                             "user1 : 1회");
 
         assertEquals(ranking.toString(), String.join("\n", result));
     }
@@ -44,9 +44,12 @@ class KakaoChatCounterControllerTest {
     @DisplayName("파일의 경로가 잘못된 경우 exception 발생")
     @Test
     void fail01() {
+
+        var dontCare = "-";
+
         var request = KakaoChatCountRequest.builder()
-                                           .filePath("invalid-filepath")
-                                           .startDate("")
+                                           .filePath("/abc.txt")
+                                           .startDate(dontCare)
                                            .build();
 
         assertThrows(IllegalFilePathException.class, () -> controller.countChat(request));

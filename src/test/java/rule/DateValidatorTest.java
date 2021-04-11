@@ -2,6 +2,7 @@ package rule;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -43,5 +44,11 @@ class DateValidatorTest {
     @ParameterizedTest
     void fail03(String date) {
         assertThrows(IllegalArgumentException.class, () -> validator.validate(date));
+    }
+
+    @DisplayName("null이 들어오면 throw")
+    @Test
+    void fail04() {
+        assertThrows(IllegalArgumentException.class, () -> validator.validate(null));
     }
 }
