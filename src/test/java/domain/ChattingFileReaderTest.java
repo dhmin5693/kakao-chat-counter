@@ -1,6 +1,7 @@
 package domain;
 
 import exception.IllegalFilePathException;
+import exception.IllegalFileTypeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -40,4 +41,21 @@ class ChattingFileReaderTest {
         assertEquals(actual, expected);
     }
 
+
+    @DisplayName("잘못된 file type 에러")
+    @ValueSource(strings = {
+        "src/test/resources/windows-invalid-path.txt",
+        "src/test/resources/mac-error-01.txt"
+    })
+    @ParameterizedTest
+    void fail02(String path) {
+
+        var exception = assertThrows(IllegalFileTypeException.class,
+                                     () -> new ChattingFileReader(path));
+
+        var actual = exception.getMessage();
+        var expected = new IllegalFileTypeException(path).getMessage();
+
+        assertEquals(actual, expected);
+    }
 }
