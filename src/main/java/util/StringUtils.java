@@ -8,4 +8,8 @@ public class StringUtils {
 
         return "".equals(s.trim());
     }
+
+    public static boolean isNotBlank(String s) {
+        return !isBlank(s);
+    }
 }
