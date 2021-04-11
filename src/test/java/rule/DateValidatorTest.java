@@ -32,14 +32,14 @@ class DateValidatorTest {
     }
 
     @DisplayName("날짜 형식이 잘못된 경우 throw")
-    @ValueSource(strings = {"20201/10/31"})
+    @ValueSource(strings = {"2021-04-11", "2021 04 11"})
     @ParameterizedTest
     void fail02(String date) {
         assertThrows(IllegalArgumentException.class, () -> validator.validate(date));
     }
 
     @DisplayName("날짜 형식은 올바르나 올바르지 않은 날짜이면 throw")
-    @ValueSource(strings = {"-", "2020/10/31"})
+    @ValueSource(strings = {"20123/03/50", "2021/31/31", "2021/02/50"})
     @ParameterizedTest
     void fail03(String date) {
         assertThrows(IllegalArgumentException.class, () -> validator.validate(date));

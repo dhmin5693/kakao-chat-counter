@@ -10,6 +10,10 @@ public class DateValidator {
 
     private static final String NO_INPUT_DATE = "-";
 
+    static {
+        FORMAT.setLenient(false);
+    }
+
     public void validate(String date) {
 
         if (date == null) {
