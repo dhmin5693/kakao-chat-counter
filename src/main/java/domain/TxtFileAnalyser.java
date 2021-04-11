@@ -20,6 +20,8 @@ public class TxtFileAnalyser implements FileAnalyser {
 
     public static final String END_OF_NICKNAME = "] [";
 
+    public static final String NOT_SKIP = "-";
+
     private static final String DATE_REGEX_PATTERN =
         "^(-){15}\\s[0-9]{4}(년)\\s[0-9]{1,2}(월)\\s[0-9]{1,2}(일) (.)(요일)\\s(-){15}$";
 
@@ -51,6 +53,10 @@ public class TxtFileAnalyser implements FileAnalyser {
     }
 
     private boolean isStartDate(String text, String startDate) {
+
+        if (startDate.equals(NOT_SKIP)) {
+            return false;
+        }
 
         if (!text.matches(DATE_REGEX_PATTERN)) {
             return true;

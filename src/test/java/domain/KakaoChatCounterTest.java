@@ -1,6 +1,7 @@
 package domain;
 
 import exception.IllegalFilePathException;
+import exception.IllegalFileTypeException;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ class KakaoChatCounterTest {
 
         var windowSampleUsers = List.of(new User("kim", 2),
                                         new User("seok", 2),
-                                        new User("user1", 2),
+                                        new User("user1", 1),
                                         new User("zoo", 2));
 
         var macSampleUsers = List.of(new User("park", 8),
@@ -46,12 +47,28 @@ class KakaoChatCounterTest {
         );
     }
 
-    @DisplayName("파일 경로 및 확장자 오류")
-    @ValueSource(strings = {"", "/", "/abc.exe"})
+    @DisplayName("파일 경로 오류")
+    @ValueSource(strings = {"", "/a.txt", "/bb.csv"})
     @ParameterizedTest
     void fail01(String filePath) {
+
+        String dontCare = "-";
+
         assertThrows(IllegalFilePathException.class, () -> {
-            var counter = new KakaoChatCounter(filePath, "");
+            var counter = new KakaoChatCounter(filePath, dontCare);
+            counter.extractRanking();
+        });
+    }
+
+    @DisplayName("확장자 오류")
+    @ValueSource(strings = {"/a.etc", "/abc.exe"})
+    @ParameterizedTest
+    void fail02(String filePath) {
+
+        String dontCare = "-";
+
+        assertThrows(IllegalFileTypeException.class, () -> {
+            var counter = new KakaoChatCounter(filePath, dontCare);
             counter.extractRanking();
         });
     }

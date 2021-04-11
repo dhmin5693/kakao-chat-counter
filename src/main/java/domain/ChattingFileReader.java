@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+import util.StringUtils;
 
 public class ChattingFileReader {
 
@@ -14,6 +15,10 @@ public class ChattingFileReader {
 
     public ChattingFileReader(String filePath) {
         this.filePath = filePath;
+
+        if (StringUtils.isBlank(filePath)) {
+            throw new IllegalFilePathException(filePath);
+        }
 
         int extensionIndex = filePath.lastIndexOf('.');
         String extension = filePath.substring(extensionIndex + 1);
@@ -34,5 +39,9 @@ public class ChattingFileReader {
 
     public FileType getFileType() {
         return fileType;
+    }
+
+    public FileAnalyser createFileAnalyser() {
+        return fileType.createFileAnalyser();
     }
 }
