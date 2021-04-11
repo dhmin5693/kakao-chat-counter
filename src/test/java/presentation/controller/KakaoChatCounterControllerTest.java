@@ -26,8 +26,8 @@ class KakaoChatCounterControllerTest {
     @Test
     void success() {
         var request = KakaoChatCountRequest.builder()
-                                           .filePath("src/test/resources/windows-test-chat-01.txt")
-                                           .startDate("")
+                                           .filePath("src/test/resources/windows-sample-01.txt")
+                                           .startDate("-")
                                            .build();
 
         var response = controller.countChat(request);
