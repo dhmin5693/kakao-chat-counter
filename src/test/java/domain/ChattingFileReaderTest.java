@@ -65,8 +65,8 @@ class ChattingFileReaderTest {
 
     @DisplayName("잘못된 file type 에러")
     @ValueSource(strings = {
-        "src/test/resources/windows-invalid-path.txt",
-        "src/test/resources/mac-error-01.txt"
+        "src/test/resources/windows-invalid-path.tsv",
+        "src/test/resources/mac-error-01.xlsx"
     })
     @ParameterizedTest
     void fail02(String path) {
