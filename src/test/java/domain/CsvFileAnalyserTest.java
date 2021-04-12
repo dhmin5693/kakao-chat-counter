@@ -9,52 +9,56 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CsvFileAnalyserTest {
 
-    // TODO change to mac text style
     private final Stream<String> textStream =
-        List.of("오픈톡방 이름 님과 카카오톡 대화",
-                "저장한 날짜 : 2021-03-26 01:27:36",
-                "",
-                "--------------- 2021년 3월 25일 목요일 ---------------",
-                "user1님이 들어왔습니다.운영정책을 위반한 메시지로 신고 접수 시 카카오톡 이용에 제한이 있을 수 있습니다. ",
-                "[kim] [오후 4:03] 안녕하세요~",
-                "[seok] [오후 4:03] 반갑습니다~",
-                "[seok] [오후 4:03] 아이팟 프로도 나왔나요???",
-                "[user1] [오후 4:04] 안녕하세요~",
-                "[zoo] [오후 4:06] 죄송.. 에어팟프로 이야기한거예여. ㅋ",
-                "[zoo] [오후 4:06] 공유 상품도 있어요~",
-                "--------------- 2021년 3월 26일 금요일 ---------------",
-                "[seok] [오후 4:06] 아~",
-                "[seok] [오후 4:07] 애플이 에어팟도 다시 재개한줄 알았어요!",
-                "[kim] [오후 4:07] 헉 그런가요!")
+        List.of("Date,User,Message",
+                "2021-01-27 22:03:36,\"kim\",\"ㅋㅋㅋㅋㅋㅋ\"",
+                "2021-01-27 22:03:36,\"kim\",\"넨\"",
+                "2021-01-27 22:03:38,\"kim\",\"화이팅!!!\"",
+                "2021-01-27 22:03:39,\"min\",\"그게 뭐죠,,\"",
+                "2021-01-27 22:04:18,\"park\",\"php라니\"",
+                "2021-01-27 22:04:19,\"이름없음\",\"레거시가 php인거죠 뭐ㅠㅜ저희회사도 스타텁인데 레거시가 php. . .\"",
+                "2021-01-27 22:04:36,\"min\",\"내 미랜가\"",
+                "2021-01-27 22:04:38,\"kim\",\"echo \"\"php\"\".\"\"최고\"\"\"",
+                "2021-01-27 22:05:37,\"cheol\",\"못해도 용수철로 가즈아\"",
+                "2021-01-27 22:06:36,\"이름없음\",\"용수철쓰는 회사가구싶어요\"",
+                "2021-01-28 10:25:21,\"(알 수 없음)\",\"(알 수 없음)님이 나갔습니다.\"",
+                "2021-01-28 11:33:19,\"algo\",\"강의 계획서 거의 올라왔네요\"",
+                "2021-01-28 11:33:55,\"ve\",\"오\"",
+                "2021-01-28 11:33:58,\"ve\",\"머들으실래요?\"",
+                "2021-01-28 11:34:06,\"algo\",\"6전공이요\"",
+                "2021-01-28 11:34:06,\"ve\",\"저 디공이여\"")
             .stream();
 
     @DisplayName("랭킹 집계 성공")
     @Test
     void success() {
 
-        var expected = new Ranking(List.of(new User("kim", 2),
-                                           new User("seok", 2),
-                                           new User("user1", 1),
-                                           new User("zoo", 2)));
+        var expected = new Ranking(List.of(new User("algo", 2),
+                                           new User("kim", 4),
+                                           new User("min", 2),
+                                           new User("ve", 3),
+                                           new User("이름없음", 2),
+                                           new User("cheol", 1),
+                                           new User("park", 1)));
 
         var fileAnalyser = new CsvFileAnalyser();
         var actual = fileAnalyser.analyse(textStream);
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("startDate 이전 데이터는 무시하고 랭킹 집계 성공")
     @Test
     void successWithSkip() {
 
-        String startDate = "2021/03/26";
+        String startDate = "2021/01/28";
 
-        var expected = new Ranking(List.of(new User("seok", 2),
-                                           new User("kim", 1)));
+        var expected = new Ranking(List.of(new User("algo", 2),
+                                           new User("ve", 3)));
 
         var fileAnalyser = new CsvFileAnalyser();
         var actual = fileAnalyser.analyse(textStream, startDate);
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 }
