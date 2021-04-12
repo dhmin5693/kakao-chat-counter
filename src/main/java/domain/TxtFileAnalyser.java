@@ -38,7 +38,7 @@ public class TxtFileAnalyser implements FileAnalyser {
 
             int index = text.indexOf(END_OF_NICKNAME);
             String nickname = text.substring(1, index);
-            cache.merge(nickname, 1, (value, count) -> count + 1);
+            cache.merge(nickname, 1, Integer::sum);
         });
 
         return new Ranking(cache.entrySet()
