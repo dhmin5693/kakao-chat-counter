@@ -16,6 +16,8 @@ public class CsvFileAnalyser implements FileAnalyser {
     private static final String SUFFIX_IN = "들어왔습니다.\"";
     private static final String SUFFIX_OUT = "나갔습니다.\"";
 
+    private static final String NICKNAME_STARTING_POINT = "\",\"";
+
     @Override
     public Ranking analyse(Stream<String> stream) {
 
@@ -27,7 +29,7 @@ public class CsvFileAnalyser implements FileAnalyser {
                 return;
             }
 
-            int nicknameEndIndex = text.indexOf("\",\"");
+            int nicknameEndIndex = text.indexOf(NICKNAME_STARTING_POINT);
             var nickname = text.substring(NICKNAME_START_INDEX, nicknameEndIndex);
 
             cache.merge(nickname, 1, Integer::sum);

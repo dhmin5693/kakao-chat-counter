@@ -1,15 +1,14 @@
 package util;
 
 public class StringUtils {
+
+    private static final String EMPTY_STRING = "";
+
     public static boolean isBlank(String s) {
         if (s == null) {
             return true;
         }
 
-        return "".equals(s.trim());
-    }
-
-    public static boolean isNotBlank(String s) {
-        return !isBlank(s);
+        return EMPTY_STRING.equals(s.trim());
     }
 }

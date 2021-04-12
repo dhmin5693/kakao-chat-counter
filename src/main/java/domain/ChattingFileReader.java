@@ -10,6 +10,9 @@ import util.StringUtils;
 
 public class ChattingFileReader {
 
+    private static final char DOT = '.';
+    private static final int ADDITIONAL_INDEX = 1;
+
     private final String filePath;
     private final FileType fileType;
 
@@ -20,13 +23,17 @@ public class ChattingFileReader {
             throw new IllegalFilePathException(filePath);
         }
 
-        int extensionIndex = filePath.lastIndexOf('.');
-        String extension = filePath.substring(extensionIndex + 1);
+        String extension = getExtension(filePath);
 
         this.fileType = FileType.of(extension);
         if (fileType.isInvalidType()) {
             throw new IllegalFileTypeException(filePath);
         }
+    }
+
+    private String getExtension(String filePath) {
+        int extensionIndex = filePath.lastIndexOf(DOT);
+        return filePath.substring(extensionIndex + ADDITIONAL_INDEX);
     }
 
     public Stream<String> getStreamData() {

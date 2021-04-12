@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toUnmodifiableList;
@@ -31,5 +32,10 @@ public class Ranking {
 
         Ranking ranking = (Ranking) o;
         return this.toString().equals(ranking.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this);
     }
 }

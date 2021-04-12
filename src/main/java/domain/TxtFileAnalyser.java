@@ -18,9 +18,9 @@ public class TxtFileAnalyser implements FileAnalyser {
     private static final String TEXT_REGEX_PATTERN =
         "^\\[(.+)]\\s\\[(오전|오후)\\s[0-9]{1,2}(:)[0-9]{1,2}]\\s(.*)$";
 
-    public static final String END_OF_NICKNAME = "] [";
+    private static final String END_OF_NICKNAME = "] [";
 
-    public static final String NOT_SKIP = "-";
+    private static final String NOT_SKIP = "-";
 
     private static final String DATE_REGEX_PATTERN =
         "^(-){15}\\s[0-9]{4}(년)\\s[0-9]{1,2}(월)\\s[0-9]{1,2}(일) (.)(요일)\\s(-){15}$";
