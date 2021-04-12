@@ -32,14 +32,14 @@ class TxtFileAnalyserTest {
     void success() {
 
         var expected = new Ranking(List.of(new User("kim", 2),
-                                           new User("seok", 2),
+                                           new User("seok", 4),
                                            new User("user1", 1),
                                            new User("zoo", 2)));
 
         var fileAnalyser = new TxtFileAnalyser();
         var actual = fileAnalyser.analyse(textStream);
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("startDate 이전 데이터는 무시하고 랭킹 집계 성공")
@@ -54,6 +54,6 @@ class TxtFileAnalyserTest {
         var fileAnalyser = new TxtFileAnalyser();
         var actual = fileAnalyser.analyse(textStream, startDate);
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 }

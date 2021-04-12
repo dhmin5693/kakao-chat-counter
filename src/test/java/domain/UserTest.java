@@ -53,7 +53,7 @@ class UserTest {
                           .sorted()
                           .collect(toList());
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     @DisplayName("nickname이 없으면 exception")

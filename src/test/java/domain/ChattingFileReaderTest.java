@@ -33,7 +33,7 @@ class ChattingFileReaderTest {
         var reader = new ChattingFileReader(path);
 
         var actual = reader.getFileType();
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     private static Stream<Arguments> fileTypeTestCase() {
@@ -59,7 +59,7 @@ class ChattingFileReaderTest {
         var actual = exception.getMessage();
         var expected = new IllegalFilePathException(path).getMessage();
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
 
@@ -77,6 +77,6 @@ class ChattingFileReaderTest {
         var actual = exception.getMessage();
         var expected = new IllegalFileTypeException(path).getMessage();
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 }

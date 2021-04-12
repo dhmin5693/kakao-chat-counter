@@ -1,5 +1,7 @@
 package presentation.controller;
 
+import domain.Ranking;
+import domain.User;
 import exception.IllegalFilePathException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,20 +27,23 @@ class KakaoChatCounterControllerTest {
     @DisplayName("채팅 횟수를 정확히 세는데 성공")
     @Test
     void success() {
+
+        var expected =
+            new Ranking(List.of(new User("kim", 2),
+                                new User("seok", 4),
+                                new User("zoo", 2),
+                                new User("user1", 1)))
+                .toString();
+
         var request = KakaoChatCountRequest.builder()
                                            .filePath("src/test/resources/windows-sample-01.txt")
                                            .startDate("-")
                                            .build();
 
         var response = controller.countChat(request);
-        var ranking = response.getRanking();
+        var actual = response.getRanking().toString();
 
-        var result = List.of("kim : 2회",
-                             "seok : 2회",
-                             "zoo : 2회",
-                             "user1 : 1회");
-
-        assertEquals(ranking.toString(), String.join("\n", result));
+        assertEquals(expected, actual);
     }
 
     @DisplayName("파일의 경로가 잘못된 경우 exception 발생")

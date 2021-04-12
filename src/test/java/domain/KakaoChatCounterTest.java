@@ -25,13 +25,13 @@ class KakaoChatCounterTest {
         var actual = kakaoChatCounter.extractRanking().toString();
         var expected = output.toString();
 
-        assertEquals(actual, expected);
+        assertEquals(expected, actual);
     }
 
     private static Stream<Arguments> tc01() {
 
         var windowSampleUsers = List.of(new User("kim", 2),
-                                        new User("seok", 2),
+                                        new User("seok", 4),
                                         new User("user1", 1),
                                         new User("zoo", 2));
 
