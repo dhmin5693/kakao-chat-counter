@@ -37,10 +37,6 @@ public class ChattingFileReader {
         }
     }
 
-    public FileType getFileType() {
-        return fileType;
-    }
-
     public FileAnalyser createFileAnalyser() {
         return fileType.createFileAnalyser();
     }

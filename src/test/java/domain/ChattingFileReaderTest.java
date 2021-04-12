@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,17 +30,18 @@ class ChattingFileReaderTest {
     @DisplayName("정확한 file type 반환")
     @MethodSource(value = "fileTypeTestCase")
     @ParameterizedTest
-    void fileTypeTest(String path, FileType expected) {
-        var reader = new ChattingFileReader(path);
+    void fileTypeTest(String path, Class<?> expected) {
 
-        var actual = reader.getFileType();
-        assertEquals(expected, actual);
+        var reader = new ChattingFileReader(path);
+        var actual = reader.createFileAnalyser();
+
+        assertThat(actual).isInstanceOf(expected);
     }
 
     private static Stream<Arguments> fileTypeTestCase() {
         return Stream.of(
-            arguments("src/test/resources/windows-sample-01.txt", FileType.TXT),
-            arguments("src/test/resources/mac-sample-01.csv", FileType.CSV)
+            arguments("src/test/resources/windows-sample-01.txt", TxtFileAnalyser.class),
+            arguments("src/test/resources/mac-sample-01.csv", CsvFileAnalyser.class)
         );
     }
 
